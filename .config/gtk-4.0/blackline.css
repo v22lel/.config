@@ -1,0 +1,132 @@
+/* Blackline 0.1.3: GTK 4.22 / libadwaita 1.9, always black. MIT license. */
+:root {
+  /* Reserve the brightest line for the focused window's outline. */
+  --blackline-border: #505050;
+  --blackline-window-border: #b0b0b0;
+  --window-bg-color: #000000;
+  --window-fg-color: #eeeeee;
+  --view-bg-color: #000000;
+  --view-fg-color: #eeeeee;
+  --headerbar-bg-color: #000000;
+  --headerbar-fg-color: #eeeeee;
+  --headerbar-backdrop-color: #000000;
+  --headerbar-shade-color: var(--blackline-border);
+  --headerbar-darker-shade-color: var(--blackline-border);
+  --sidebar-bg-color: #000000;
+  --sidebar-fg-color: #eeeeee;
+  --sidebar-backdrop-color: #000000;
+  --sidebar-border-color: var(--blackline-border);
+  --secondary-sidebar-bg-color: #000000;
+  --secondary-sidebar-fg-color: #eeeeee;
+  --secondary-sidebar-backdrop-color: #000000;
+  --secondary-sidebar-border-color: var(--blackline-border);
+  --card-bg-color: #000000;
+  --card-fg-color: #eeeeee;
+  --dialog-bg-color: #000000;
+  --dialog-fg-color: #eeeeee;
+  --popover-bg-color: #000000;
+  --popover-fg-color: #eeeeee;
+  --thumbnail-bg-color: #000000;
+  --thumbnail-fg-color: #eeeeee;
+
+  /* Keep semantic colors readable even when an app requests light mode. */
+  --standalone-color-oklab: max(l, 0.85) a b;
+}
+
+/* An inset outline avoids resizing windows or their contents. */
+window.csd:not(.fullscreen) {
+  outline: 1px solid var(--blackline-window-border);
+  outline-offset: -1px;
+}
+
+/* Maximized windows do not need an outer border at the screen edges. */
+window.csd.maximized {
+  outline: none;
+}
+
+/* Inactive windows recede to the same gray as internal separators. */
+window.csd:backdrop {
+  --blackline-window-border: var(--blackline-border);
+}
+
+/* User-requested design: replace Adwaita's elevated card and settings-group backgrounds with the same black as their surroundings, encircled by gray lines. */
+/* Inset outlines preserve sizing and avoid clipping on separate list rows. */
+.card,
+list.boxed-list,
+list.boxed-list-separate > row {
+  box-shadow: inset 0 0 0 1px var(--blackline-border);
+}
+
+/* Give black popup menus a visible edge, including their pointing arrow. */
+popover.menu > contents,
+popover.menu > arrow {
+  border-color: var(--blackline-border);
+}
+
+/* Replace blurred toolbar shadows with one crisp section boundary. */
+toolbarview > .top-bar {
+  box-shadow: 0 1px var(--blackline-border);
+}
+
+toolbarview > .bottom-bar {
+  box-shadow: 0 -1px var(--blackline-border);
+}
+
+separator {
+  background-color: var(--blackline-border);
+}
+
+/* Keep pane resize handles wide enough to grab; draw only one line. */
+paned > separator {
+  background: none;
+}
+
+paned.horizontal > separator {
+  box-shadow: inset 1px 0 var(--blackline-border);
+}
+
+paned.vertical > separator {
+  box-shadow: inset 0 1px var(--blackline-border);
+}
+
+/* Compact chrome without shrinking text, icons, or content-area controls. */
+headerbar {
+  min-height: 34px;
+}
+
+headerbar > windowhandle > box {
+  padding: 2px 6px;
+}
+
+headerbar button {
+  min-height: 24px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+windowcontrols > button > image {
+  padding: 2px;
+}
+
+/* Nautilus has its own cell padding and list spacing. */
+.nautilus-list-view columnview > listview {
+  border-spacing: 2px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.nautilus-list-view .nautilus-view-cell {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* Clip overflowing paths cleanly instead of fading their edges. */
+.nautilus-pathbar > scrolledwindow undershoot.left,
+.nautilus-pathbar > scrolledwindow undershoot.right {
+  background-image: none;
+}
+
+/* Nautilus still uses a legacy named color for this inactive surface. */
+.floating-bar:backdrop {
+  background-color: var(--view-bg-color);
+}
